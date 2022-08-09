@@ -1,0 +1,178 @@
+-- Procedimientos Almacenados
+-- Andrés Tejada
+-- 08/08/2022
+
+--=========================== ESCUELA ===========================--
+
+--PA Insertar Escuela
+IF Object_id (N'PA_InsertarEscuela', N'P') is not null
+DROP proc PA_InsertarEscuela
+GO
+CREATE proc PA_InsertarEscuela
+@Escuela varchar(50),
+@Facultad varchar(50)
+AS
+	BEGIN
+		-- IdEscuela no puede ser duplicado
+		-- If (not exists(Select IdEscuela form TEscuela where IdEscuela = @IdEscuela))
+			-- Error: Escuela no puede ser duplicado
+		-- Else
+			-- Select CodError = 0, Mensaje = 'Se inserto correctamente el registro'
+		Insert into TEscuela (Escuela, Facultad)
+		Values (@Escuela, @Facultad)
+	END
+GO
+
+--PA Modificar Escuela
+IF Object_id (N'PA_ModificarEscuela', N'P') is not null
+DROP proc PA_ModificarEscuela
+GO
+CREATE proc PA_ModificarEscuela
+@IdEscuela int,
+@Escuela varchar(50),
+@Facultad varchar(50)
+AS
+	BEGIN
+		Update TEscuela
+		Set Escuela = @Escuela, Facultad = @Facultad
+		Where IdEscuela = @IdEscuela
+	END
+GO
+
+--PA Eliminar Escuela
+IF Object_id (N'PA_EliminarEscuela', N'P') is not null
+DROP proc PA_EliminarEscuela
+GO
+CREATE proc PA_EliminarEscuela
+@IdEscuela int
+AS
+	BEGIN
+		Delete TEscuela
+		Where IdEscuela = @IdEscuela
+	END
+GO
+
+--PA Mostrar Escuela
+IF Object_id (N'PA_MostrarEscuela', N'P') is not null
+DROP proc PA_MostrarEscuela
+GO
+CREATE proc PA_MostrarEscuela
+AS
+	BEGIN
+		Select * from TEscuela
+		Order by IdEscuela
+	END
+GO
+
+-- PA Buscar Escuela
+IF Object_id (N'PA_BuscarEscuela', N'P') is not null
+DROP proc PA_BuscarEscuela
+GO
+CREATE proc PA_BuscarEscuela
+@Buscar varchar(50)
+AS
+	BEGIN
+		Select * from TEscuela
+		Where Escuela like @Buscar + '%'
+	END
+GO
+
+--=========================== ALUMNO ===========================--
+
+--PA Insertar Alumno
+IF Object_id (N'PA_InsertarAlumno', N'P') is not null
+DROP proc PA_InsertarAlumno
+GO
+CREATE proc PA_InsertarAlumno
+@Apellidos varchar(50),
+@Nombres varchar(50),
+@LugNacimiento varchar(50),
+@IdEscuela int
+AS
+	BEGIN
+		Insert into TAlumno(Apellidos, Nombres, LugNacimiento, IdEscuela)
+		Values (@Apellidos, @Nombres, @LugNacimiento, @IdEscuela)
+	END
+GO
+
+--PA Modificar Alumno
+IF Object_id (N'PA_ModificarAlumno', N'P') is not null
+DROP proc PA_ModificarAlumno
+GO
+CREATE proc PA_ModificarAlumno
+@IdAlumno int,
+@Apellidos varchar(50),
+@Nombres varchar(50),
+@LugNacimiento varchar(50),
+@IdEscuela int
+AS
+	BEGIN
+		Update TAlumno
+		Set Apellidos = @Apellidos, Nombres = @Nombres, LugNacimiento = @LugNacimiento, IdEscuela = @IdEscuela
+		Where IdAlumno = @IdAlumno
+	END
+GO
+
+--PA Eliminar Alumno
+IF Object_id (N'PA_EliminarAlumno', N'P') is not null
+DROP proc PA_EliminarAlumno
+GO
+CREATE proc PA_EliminarAlumno
+@IdAlumno int
+AS
+	BEGIN
+		Delete TAlumno
+		Where IdAlumno = @IdAlumno
+	END
+GO
+
+--PA Mostrar Alumno
+IF Object_id (N'PA_MostrarAlumno', N'P') is not null
+DROP proc PA_MostrarAlumno
+GO
+CREATE proc PA_MostrarAlumno
+AS
+	BEGIN
+		Select * from TAlumno
+		Order by IdAlumno
+	END
+GO
+
+-- PA Buscar Alumno por el Nombre
+IF Object_id (N'PA_BuscarAlumnoNombre', N'P') is not null
+DROP proc PA_BuscarAlumnoNombre
+GO
+CREATE proc PA_BuscarAlumnoNombre
+@Buscar varchar(50)
+AS
+	BEGIN
+		Select * from TAlumno
+		Where Nombres like @Buscar + '%'
+	END
+GO
+
+-- PA Buscar Alumno por el Apellido
+IF Object_id (N'PA_BuscarAlumnoApellido', N'P') is not null
+DROP proc PA_BuscarAlumnoApellido
+GO
+CREATE proc PA_BuscarAlumnoApellido
+@Buscar varchar(50)
+AS
+	BEGIN
+		Select * from TAlumno
+		Where Apellidos like @Buscar + '%'
+	END
+GO
+
+-- PA Buscar Alumno por el Lugar de Nac.
+IF Object_id (N'PA_BuscarAlumnoLugarNac', N'P') is not null
+DROP proc PA_BuscarAlumnoLugarNac
+GO
+CREATE proc PA_BuscarAlumnoLugarNac
+@Buscar varchar(50)
+AS
+	BEGIN
+		Select * from TAlumno
+		Where LugNacimiento like @Buscar + '%'
+	END
+GO
