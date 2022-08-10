@@ -1,0 +1,6 @@
+echo Instalador de la Base de Datos Universidad
+echo Autor: Andres Tejada
+sqlcmd -SDESKTOP-GQ0QQTB\SQLEXPRESS -E -i BDUniversidad.sql
+sqlcmd -SDESKTOP-GQ0QQTB\SQLEXPRESS -E -i BDUniversidadPA.sql
+echo Se ejecuto correctamente la Base de Datos
+pause
